@@ -141,7 +141,7 @@ public class RetrieveData_Datesheet extends AppCompatActivity implements customV
         imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                dbRefer.child(selectedKey).setValue(null);
+                dbRefer.child("Event").child(selectedKey).setValue(null);
                 Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
             }
         });
