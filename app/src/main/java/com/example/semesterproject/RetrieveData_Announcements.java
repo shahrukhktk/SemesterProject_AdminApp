@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetrieveData_Announcements extends AppCompatActivity implements customViewHolder.onItemClickListener
+public class RetrieveData_Announcements extends AppCompatActivity
 {
 
     RecyclerView mRecyclerView;
@@ -33,7 +33,7 @@ public class RetrieveData_Announcements extends AppCompatActivity implements cus
     private ValueEventListener mDBListener;
 
     Context mContext;
-    private customViewHolder adapter;
+    private Announcment_Adapter adapter;
     private List<UploadEvent> mUploads;
 
     @Override
@@ -59,10 +59,6 @@ public class RetrieveData_Announcements extends AppCompatActivity implements cus
 
         mUploads = new ArrayList<>();
 
-        adapter = new customViewHolder(RetrieveData_Announcements.this, mUploads);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(RetrieveData_Announcements.this);
-
         mStorage = FirebaseStorage.getInstance();
         dbRefer = FirebaseDatabase.getInstance().getReference("Announcements").child("Event");
 
@@ -73,9 +69,11 @@ public class RetrieveData_Announcements extends AppCompatActivity implements cus
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     UploadEvent uploadedpic = postSnapshot.getValue(UploadEvent.class);
-                    uploadedpic.setmKey(dataSnapshot.getKey());
+                    uploadedpic.mKey = postSnapshot.getKey();
                     mUploads.add(uploadedpic);
                 }
+                adapter = new Announcment_Adapter(RetrieveData_Announcements.this, mUploads);
+                mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
@@ -92,44 +90,44 @@ public class RetrieveData_Announcements extends AppCompatActivity implements cus
         super.onStart();
     }
 
-
-    @Override
-    public void OnItemClick(int position)
-    {
-        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void UpdateClick(int position)
-    {
-        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(RetrieveData_Announcements.this, Update_Announcement_Event.class));
-    }
-
-    @Override
-    public void DeleteClick(int position)
-    {
-        UploadEvent selectedItem = mUploads.get(position);
-        final String selectedKey = selectedItem.getmKey();
-        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
-        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                dbRefer.child("Event").child(selectedKey).setValue(null);
-                Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(mContext, "Error While Deleting the event { "+e.getMessage()+" }", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         dbRefer.removeEventListener(mDBListener);
     }
+
+//    @Override
+//    public void OnItemClick(int position)
+//    {
+//        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void UpdateClick(int position)
+//    {
+//        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
+//        startActivity(new Intent(RetrieveData_Announcements.this, Update_Announcement_Event.class));
+//    }
+//
+//    @Override
+//    public void DeleteClick(int position)
+//    {
+//        UploadEvent selectedItem = mUploads.get(position);
+//        final String selectedKey = selectedItem.getmKey();
+//        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
+//        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                dbRefer.child("Event").child(selectedKey).setValue(null);
+//                Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(mContext, "Error While Deleting the event { "+e.getMessage()+" }", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
 }

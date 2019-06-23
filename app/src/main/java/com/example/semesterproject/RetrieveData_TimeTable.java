@@ -22,7 +22,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetrieveData_TimeTable extends AppCompatActivity implements customViewHolder.onItemClickListener
+public class RetrieveData_TimeTable extends AppCompatActivity
 {
 
     RecyclerView mRecyclerView;
@@ -32,7 +32,7 @@ public class RetrieveData_TimeTable extends AppCompatActivity implements customV
 
     Context mContext;
 
-    private customViewHolder adapter;
+    private Timetable_Adapter adapter;
     private List<UploadEvent> mUploads;
 
     @Override
@@ -58,10 +58,6 @@ public class RetrieveData_TimeTable extends AppCompatActivity implements customV
 
         mUploads = new ArrayList<>();
 
-        adapter = new customViewHolder(RetrieveData_TimeTable.this, mUploads);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(RetrieveData_TimeTable.this);
-
         mStorage = FirebaseStorage.getInstance();
         dbRefer = FirebaseDatabase.getInstance().getReference("Timetable").child("Event");
 
@@ -72,9 +68,11 @@ public class RetrieveData_TimeTable extends AppCompatActivity implements customV
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     UploadEvent uploadedpic = postSnapshot.getValue(UploadEvent.class);
-                    uploadedpic.setmKey(dataSnapshot.getKey());
+                    uploadedpic.mKey = postSnapshot.getKey();
                     mUploads.add(uploadedpic);
                 }
+                adapter = new Timetable_Adapter(RetrieveData_TimeTable.this, mUploads);
+                mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
@@ -91,39 +89,39 @@ public class RetrieveData_TimeTable extends AppCompatActivity implements customV
         super.onStart();
     }
 
-
-    @Override
-    public void OnItemClick(int position)
-    {
-        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void UpdateClick(int position)
-    {
-        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void DeleteClick(int position)
-    {
-        UploadEvent selectedItem = mUploads.get(position);
-        final String selectedKey = selectedItem.getmKey();
-        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
-        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                dbRefer.child("Event").child(selectedKey).setValue(null);
-                Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         dbRefer.removeEventListener(mDBListener);
     }
+
+//    @Override
+//    public void OnItemClick(int position)
+//    {
+//        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void UpdateClick(int position)
+//    {
+//        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void DeleteClick(int position)
+//    {
+//        UploadEvent selectedItem = mUploads.get(position);
+//        final String selectedKey = selectedItem.getmKey();
+//        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
+//        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                dbRefer.child("Event").child(selectedKey).setValue(null);
+//                Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
 
 }

@@ -32,8 +32,10 @@ import android.widget.Toast;
 import com.example.semesterproject.Model.UploadEvent;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RetrieveData_Datesheet extends AppCompatActivity implements customViewHolder.onItemClickListener
+public class RetrieveData_Datesheet extends AppCompatActivity
 {
 
     RecyclerView mRecyclerView;
@@ -87,10 +89,6 @@ public class RetrieveData_Datesheet extends AppCompatActivity implements customV
 
         mUploads = new ArrayList<>();
 
-        adapter = new customViewHolder(RetrieveData_Datesheet.this, mUploads);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(RetrieveData_Datesheet.this);
-
         mStorage = FirebaseStorage.getInstance();
         dbRefer = FirebaseDatabase.getInstance().getReference("Exams Datesheets").child("Event");
 
@@ -101,9 +99,11 @@ public class RetrieveData_Datesheet extends AppCompatActivity implements customV
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     UploadEvent uploadedpic = postSnapshot.getValue(UploadEvent.class);
-                    uploadedpic.setmKey(dataSnapshot.getKey());
+                    uploadedpic.mKey = postSnapshot.getKey();
                     mUploads.add(uploadedpic);
                 }
+                adapter = new customViewHolder(RetrieveData_Datesheet.this, mUploads);
+                mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
@@ -121,31 +121,42 @@ public class RetrieveData_Datesheet extends AppCompatActivity implements customV
     }
 
 
-    @Override
-    public void OnItemClick(int position)
-    {
-        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void OnItemClick(int position)
+//    {
+//        Toast.makeText(mContext, "OnItemClick" + position, Toast.LENGTH_SHORT).show();
+//    }
 
-    @Override
-    public void UpdateClick(int position)
-    {
-        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void UpdateClick(int position)
+//    {
+//        Toast.makeText(mContext, "UPDATE" + position, Toast.LENGTH_SHORT).show();
+//    }
 
-    @Override
-    public void DeleteClick(int position) {
-        UploadEvent selectedItem = mUploads.get(position);
-        final String selectedKey = selectedItem.getmKey();
-        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
-        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                dbRefer.child("Event").child(selectedKey).setValue(null);
-                Toast.makeText(mContext, "Event Deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    public void DeleteClick(int position) {
+//        UploadEvent selectedItem = mUploads.get(position);
+//        final String selectedKey = selectedItem.getmKey();
+//        StorageReference imgRef = mStorage.getReferenceFromUrl(selectedItem.getImageUri());
+//        imgRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                dbRefer.child(selectedKey).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> mTask) {
+//                        if(mTask.isSuccessful())
+//                        {
+//                            Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else
+//                        {
+//                            Toast.makeText(mContext, mTask.getException().getMessage(), Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void onDestroy()

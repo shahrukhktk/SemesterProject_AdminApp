@@ -8,7 +8,7 @@ public class UploadEvent
     private String mMessage;
     private String mImageUri;
     private String date;
-    private String mKey;
+    public String mKey;
 
     public UploadEvent()
     {
