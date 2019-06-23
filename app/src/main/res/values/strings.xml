@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SemesterProject</string>
+
+    <string name="TitleOfKust">KUST EVENTS</string>
+    <string name="DepartmentNameTitle">IIT DEPARTMENT</string>
+    <string name="AdminButton">ADMIN</string>
+    <string name="AdminLoginTitle">LOGIN</string>
+    <string name="title_activity_admin_login">AdminLogin</string>
+    <string name="emailText">Email</string>
+    <string name="passwordText">Password</string>
+    <string name="Loginbtn">Login</string>
+
+    <string name="Exams">Datesheet Section</string>
+    <string name="ClassesTiming">Timetable Section</string>
+    <string name="otherAnnouncements">Other Announcements</string>
+
+    <string name="DeveloperDetails">Developer Details</string>
+
+    <string name="developerName">Name : Shahrukh Khan</string>
+    <string name="developerSkills">UI/UX DESIGNER | ANDROID DEVELOPER \n| GRAPHIC DESIGNER</string>
+    <string name="studyingAt">Student at KUST</string>
+
+    <string name="feedbackbtnText">Give Feedback</string>
+
+    <string name="Custom_dialog_text">What action you want to do?</string>
+
+</resources>

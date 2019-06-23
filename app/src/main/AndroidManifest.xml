@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.semesterproject">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Feedback_Activity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Update_Announcement_Event"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RetrieveData_TimeTable"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RetrieveData_Announcements"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RetrieveData_Datesheet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DeveloperDetailsSection"
+            android:parentActivityName=".Dashboard_Page"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OtherAnnouncementSection"
+            android:parentActivityName=".Dashboard_Page"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TimetableSection"
+            android:parentActivityName=".Dashboard_Page"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DatesheetsSection"
+            android:parentActivityName=".Dashboard_Page"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Dashboard_Page"
+            android:parentActivityName=".Admin_Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Admin_Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

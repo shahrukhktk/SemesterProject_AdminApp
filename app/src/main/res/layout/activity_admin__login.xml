@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/mainscreen"
+    android:padding="25dp"
+    tools:context=".Admin_Login">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/kustlogo"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/AdminLoginTitle"
+            android:textSize="22sp"
+            android:fontFamily="@font/centurygothic"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_margin="15dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="@drawable/cardview"
+        >
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailTextInput"
+            android:layout_marginTop="10dp"
+            android:layout_margin="20dp"
+            android:textColorHint="@color/white"
+            app:errorEnabled="true"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:id="@+id/emailEditText"
+                android:hint="@string/emailText"
+                android:fontFamily="@font/centurygothic"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:text="admin123@gmail.com"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/passwordTextInput"
+            android:textColorHint="@color/white"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:id="@+id/passwordEditText"
+                android:hint="@string/passwordText"
+                android:text="123456"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:fontFamily="@font/centurygothic"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBTN_ID"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/buttonstyle"
+            android:text="@string/Loginbtn"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="17sp"
+            android:fontFamily="@font/centurygothic"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </View>
+
+    </LinearLayout>
+
+</LinearLayout>
